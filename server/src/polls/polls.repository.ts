@@ -13,6 +13,6 @@ export class PollsRepository {
     configService: ConfigService,
     @Inject(IORedisKey) private readonly redisClient: Redis,
   ) {
-    this.ttl = configService.get('POLL_DURATION')
+    this.ttl = configService.get('POLL_DURATION') || '24h'
   }
 }

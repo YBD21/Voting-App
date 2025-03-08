@@ -14,9 +14,7 @@ type RedisModuleOptions = {
 }
 
 type RedisAsyncModuleOptions = {
-  useFactory: (
-    ...args: any[]
-  ) => Promise<RedisModuleOptions> | RedisModuleOptions
+  useFactory: (...args: any[]) => Promise<RedisModuleOptions> | RedisModuleOptions
 } & Pick<ModuleMetadata, 'imports'> &
   Pick<FactoryProvider, 'inject'>
 
@@ -34,7 +32,9 @@ export class RedisModule {
 
         const client = await new IORedis(connectionOptions)
 
-        onClientReady(client)
+        if (onClientReady) {
+          onClientReady(client)
+        }
 
         return client
       },
